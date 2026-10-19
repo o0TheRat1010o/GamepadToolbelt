@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  GamepadToolbelt settings (every machine reads its own copy: players and servers).
+
+  Most values can be applied at runtime with the console command "gtb reload".
+  Settings marked [world] are read when a world is loaded or joined.
+  Unknown names or invalid values are reported in the game log and fall back to the default.
+-->
+<GamepadToolbelt>
+
+  <!-- ===== Controller chords ===== -->
+
+  <!-- Master switch for the controller chords (LB/RB layer). Off = the toolbelt behaves exactly like vanilla. -->
+  <property name="Enabled" value="true" />
+
+  <!-- A bumper released within this time (seconds, 0.10 - 1.00) without a chord selects slot 1 (LB) or 11 (RB).
+       Holding it longer without a chord cancels. -->
+  <property name="TapMaxSeconds" value="0.35" />
+
+  <!-- Allow chords while aiming down sights (switching lowers the weapon, like vanilla). -->
+  <property name="AllowWhileAiming" value="true" />
+
+  <!-- ===== Button hints on the toolbelt ===== -->
+
+  <!-- Always = hints on every slot in controller mode, WhileHeld = only while LB or RB is held, Off = no hints. -->
+  <property name="HintMode" value="Always" />
+
+  <!-- Opacity of the hints while no bumper is held (0.0 - 1.0). -->
+  <property name="HintIdleOpacity" value="0.8" />
+
+  <!-- ===== Haptic feedback ===== -->
+
+  <!-- Short vibration when a chord selects a slot (respects the game's vibration options). -->
+  <property name="Haptics" value="true" />
+
+  <!-- Vibration strength (0.05 - 1.0) and length in milliseconds (20 - 300). -->
+  <property name="HapticStrength" value="0.25" />
+  <property name="HapticMs" value="50" />
+
+  <!-- ===== Keyboard ===== -->
+
+  <!-- Key that selects slot 11 on the keyboard. None = no key. Not with Ctrl/Alt; with Shift (sprinting) it works
+       too, except in god or fly mode (vanilla uses Shift+Minus/Equals for the fly speed there).
+       Any InControl key name, e.g. Minus, Equals, Backquote, Key0 (Key1 - Key0 are the vanilla slot keys). -->
+  <property name="KeyboardSlot11Key" value="Minus" />
+
+  <!-- ===== Server / host ===== -->
+
+  <!-- [world] Toolbelt size this machine offers when it hosts a world (singleplayer, listen server, dedicated server):
+       11 = the extra slot, 10 = vanilla size. Joining players with the mod follow the server; players without it keep
+       10 slots and stay fully compatible. -->
+  <property name="ToolbeltSlots" value="11" />
+
+  <!-- ===== Diagnostics ===== -->
+
+  <!-- Audit log in Mods/GamepadToolbelt/Logs: Off | Summary | Detailed -->
+  <property name="LogLevel" value="Summary" />
+
+  <!-- Saves one screenshot of each hint state per session to Mods/GamepadToolbelt/Logs/screens (for diagnostics). -->
+  <property name="SelfCheckScreenshots" value="false" />
+
+</GamepadToolbelt>

@@ -1,0 +1,158 @@
+# Gamepad Toolbelt
+
+**Direct toolbelt access for controller players in 7 Days to Die (V 3.3, b18) - plus an 11th toolbelt slot.**
+
+On a controller, vanilla only lets you step through the toolbelt with LB/RB one slot at a time (holding LB opens a radial
+menu). That is too slow when a zombie is in your face and you need the shotgun *now*. Gamepad Toolbelt maps every slot
+to a short chord on the bumpers and face buttons:
+
+| Slot | Controller | | Slot | Controller |
+|---:|---|---|---:|---|
+| 1 | tap **LB** | | 7 | hold **RB** + **A** |
+| 2 | hold **LB** + **A** | | 8 | hold **RB** + **X** |
+| 3 | hold **LB** + **X** | | 9 | hold **RB** + **Y** |
+| 4 | hold **LB** + **Y** | | 10 | hold **RB** + **B** |
+| 5 | hold **LB** + **B** | | 11 | tap **RB** |
+| 6 | **LB** + **RB** (either order) | | | |
+
+PlayStation: L1/R1 and Cross/Square/Triangle/Circle in the same positions. Keyboard: `-` (minus) selects slot 11, also
+while sprinting.
+
+![Toolbelt hints while LB is held](media/toolbelt-lb.png)
+
+- **Fast:** while a bumper is held, press face buttons as often as you like to switch between its slots. A bumper that
+  is held longer than 0.35 s without a chord cancels (nothing happens), so a nervous thumb never switches by accident.
+- **11 slots:** the toolbelt gets an 11th slot (tap RB). Old saves just get an empty slot.
+- **Button hints:** a small plate on each slot shows its chord with the game's own Xbox or PlayStation glyphs. While LB or
+  RB is held, the reachable slots lift and glow, the others fade, and slot 1/11 shows a draining timer ring; a selection
+  pops the plate and flashes the slot. The XP bar slides up a little to make room. With mouse and keyboard the hints
+  fade out.
+- **Haptics:** a short, light vibration confirms a chord (follows the game's vibration options).
+- **Everything else stays vanilla:** A still jumps, B crouches, X reloads, Y uses - unless a bumper is held. Menus, the
+  inventory, vehicles (horn/turbo), radial menus, console, chat, map and editors keep their vanilla LB/RB behaviour.
+  Swapping uses vanilla's own holster animation and network sync.
+
+![The hints in every state: idle, LB held, RB held, both bumpers, slot 11 selected](media/toolbelt-states.png)
+
+## Multiplayer and compatibility
+
+The mod works on every machine it is installed on and never needs the other side:
+
+| Setup | Result |
+|---|---|
+| Singleplayer | 11 slots, chords, hints |
+| You host (listen server) with the mod, friends with the mod | 11 slots for everyone |
+| You host with the mod, a friend **without** it | you have 11 slots, your friend 10 (vanilla, fully compatible - they see the correct item in your hands) |
+| Dedicated server with the mod, mixed players | like hosting: players with the mod get 11 slots, players without keep 10 |
+| You join a server **without** the mod | 10 slots, all chords for slots 1-10 work, hints are shown; tap RB does nothing |
+
+How it stays compatible: the 11th slot is offered through the server's `toolbelt.xml` (a part vanilla ignores), and a
+server with the mod never sends a slot number above 10 to other players - neither for the item in your hands nor for
+shots and other weapon effects. The hint UI is patched locally on each player's game, so players without the mod get
+the unchanged vanilla UI.
+
+**Game version:** built and tested against **V 3.3.0 (b18)**. At start-up the mod checks every hook it needs and turns
+a feature off cleanly if something changed in a game update (see `gtb selftest`).
+
+**Controllers:** Xbox, PlayStation and Steam Input (Steam Deck uses the Xbox layout). Controllers that the game itself
+does not recognise keep their vanilla behaviour.
+
+**Other mods:** Harmony prefix/postfix patches only, no transpilers. UI mods that rebuild the HUD toolbelt are detected;
+the hints are then left out (the chords still work).
+
+### EasyAntiCheat
+
+This is a DLL mod. Whoever uses it starts the game **without EasyAntiCheat** (launcher option "Play without EAC") - and can
+then only join servers that do not require EAC. A dedicated server loads the mod even with EAC enabled; players without
+the mod can keep EAC on.
+
+## Installation
+
+1. Download the release ZIP and extract it into the game's `Mods` folder, so that you get
+   `Mods/GamepadToolbelt/GamepadToolbelt.dll`, `ModInfo.xml` and `Settings.xml`.
+   (`Mods/0_TFP_Harmony` ships with the game and must stay.)
+2. Start the game without EasyAntiCheat. The log (F1 console) shows `[GamepadToolbelt] ready: ... selftest PASS`.
+
+Server owners: install the same folder on the dedicated server (it offers the 11th slot; set `ToolbeltSlots` to 10 if you
+do not want that). Hosting from your own game needs nothing extra.
+
+### Uninstalling
+
+Empty slot 11 first. If you forget, the game moves that item into your backpack (or drops it next to you if the backpack
+is full) the next time you load the save. Then delete the `Mods/GamepadToolbelt` folder.
+
+## Configuration
+
+`Mods/GamepadToolbelt/Settings.xml`. Everything applies live with the console command `gtb reload`, except
+`ToolbeltSlots`, which is read when a world is loaded. Invalid values are reported in the log and fall back to the default.
+
+| Setting | Default | Meaning |
+|---|---|---|
+| `Enabled` | `true` | Master switch for the controller chords. `false` = vanilla toolbelt controls. |
+| `TapMaxSeconds` | `0.35` | A bumper released within this time (0.10 - 1.00) without a chord selects slot 1/11; longer cancels. |
+| `AllowWhileAiming` | `true` | Chords also while aiming down sights (switching lowers the weapon like vanilla). |
+| `HintMode` | `Always` | `Always`, `WhileHeld` (only while LB/RB is held) or `Off`. Hints show only in controller mode. |
+| `HintIdleOpacity` | `0.8` | Opacity of the hints while no bumper is held (0 - 1). |
+| `Haptics` | `true` | Short vibration on a chord. |
+| `HapticStrength` | `0.25` | Vibration strength (0.05 - 1). |
+| `HapticMs` | `50` | Vibration length in milliseconds (20 - 300). |
+| `KeyboardSlot11Key` | `Minus` | Keyboard key for slot 11 (an InControl key name such as `Minus`, `Equals`, `Backquote`, or `None`). Not with Ctrl/Alt; with Shift (sprinting) it works too, except in god or fly mode, where vanilla uses Shift+Minus for the fly speed. |
+| `ToolbeltSlots` | `11` | Toolbelt size this machine offers when it hosts a world: `11` or `10`. |
+| `LogLevel` | `Summary` | Audit log: `Off`, `Summary`, `Detailed`. |
+| `SelfCheckScreenshots` | `false` | Saves one screenshot of each hint state per session (diagnostics). |
+
+## Console command
+
+`gtb` (or `gamepadtoolbelt`) runs on the machine where you type it - also when you play as a guest on a server without
+the mod:
+
+| Command | |
+|---|---|
+| `gtb status` | Version, settings, patch groups, toolbelt size, controller, statistics, audit log file. |
+| `gtb selftest` | All self checks (PASS/WARN/FAIL). |
+| `gtb reload` | Re-read `Settings.xml`. |
+| `gtb loglevel off\|summary\|detailed` | Change the audit log level for this session. |
+| `gtb chords` | The controller layout of your current toolbelt. |
+| `gtb screenshot [name]` | Save a screenshot to `Mods/GamepadToolbelt/Logs/screens`. |
+
+## Audit log and diagnostics
+
+Every session writes `Mods/GamepadToolbelt/Logs/audit_<date>.jsonl` (files roll over at 50 MB, at most 10 are kept).
+`Summary` contains one line per chord and its result (with the time until the slot was held); `Detailed` adds every
+button the mod takes from the game and every change of the toolbelt state. A selftest runs at every game start and again
+once your character has spawned. Warnings and errors also appear in the game log with the prefix `[GamepadToolbelt]`.
+If the controller layer fails repeatedly it switches itself off (vanilla controls) until `gtb reload`.
+
+## FAQ
+
+**Can I still jump while holding LB?** Not with A - while a bumper is held, A/X/Y/B belong to the chord. Release the
+bumper and A jumps again. A face button you were already holding before the bumper keeps working.
+
+**Can I change the buttons?** The layout is fixed (bumpers + face buttons). Rebinding the game's own actions still works
+for everything else.
+
+**Does the mod change my save?** No save data of its own. The toolbelt has 11 slots while the mod is active; old saves
+get an empty 11th slot, and removing the mod moves the slot 11 item into your backpack.
+
+**What about the death backpack?** The game's dropped backpack holds 120 items: 96 bag + 13 equipment + 11 toolbelt fit
+exactly. (Mods that enlarge the bag further are reported by the selftest.)
+
+**Twitch integration "shuffle"?** The game's shuffle action leaves out the last toolbelt slot (slot 11 with the mod).
+
+## Building from source
+
+Requirements: .NET SDK 8 or newer, the .NET Framework 4.8 targeting pack, and an installed copy of the game (the build
+references the game's DLLs; none are included in this repository).
+
+```
+copy GamePath.user.props.example GamePath.user.props   (and set your game path)
+dotnet build -c Release
+dotnet build GamepadToolbelt/GamepadToolbelt.csproj -c Release -p:GtbDeploy=true   (also copies the mod into <game>/Mods/GamepadToolbelt)
+```
+
+The game path can also be given with `-p:SdtdGamePath=...` or the environment variable `SDTD_GAME_PATH`.
+
+## License
+
+MIT - see [LICENSE](LICENSE). Made by softdot.studio. 7 Days to Die is a trademark of The Fun Pimps; this is an
+unofficial fan project. Button glyphs are drawn from the game's own icon atlas at runtime; no game assets are included.

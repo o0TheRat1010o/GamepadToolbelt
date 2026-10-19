@@ -1,0 +1,84 @@
+name: Bug report
+description: Something does not work as the README describes.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Thanks for taking the time to report this. The mod logs what it does, so the output of `gtb status` /
+        `gtb selftest` and the audit log usually show the cause quickly.
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod version
+      description: Shown by `gtb status` and in `Mods/GamepadToolbelt/ModInfo.xml`.
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: game-version
+    attributes:
+      label: Game version
+      placeholder: "V 3.3.0 (b18)"
+    validations:
+      required: true
+  - type: dropdown
+    id: setup
+    attributes:
+      label: Where did it happen?
+      options:
+        - Singleplayer
+        - I host a game (listen server)
+        - I joined a server that has the mod
+        - I joined a server without the mod
+        - Dedicated server (server side)
+    validations:
+      required: true
+  - type: dropdown
+    id: controller
+    attributes:
+      label: Controller
+      options:
+        - Xbox controller
+        - PlayStation controller
+        - Steam Input / Steam Deck
+        - Other
+        - Keyboard and mouse (slot 11 key)
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Hold RB, press X ...
+        2. ...
+  - type: textarea
+    id: settings
+    attributes:
+      label: Changed settings
+      description: Settings in `Settings.xml` that differ from the defaults (or "none").
+  - type: textarea
+    id: other-mods
+    attributes:
+      label: Other mods
+      description: Other mods installed, especially ones that change the HUD, the toolbelt or the controls.
+  - type: textarea
+    id: console
+    attributes:
+      label: Output of `gtb status` and `gtb selftest`
+      description: Run both in the console (F1) and paste the output.
+      render: text
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: >-
+        Attach (drag and drop) the audit log of the session, `Mods/GamepadToolbelt/Logs/audit_*.jsonl`, and the game
+        log. Lines with `[GamepadToolbelt]`, `[MODS]` or `ERR` are the most useful.

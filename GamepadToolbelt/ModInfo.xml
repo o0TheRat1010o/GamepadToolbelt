@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xml>
+  <Name value="GamepadToolbelt" />
+  <DisplayName value="Gamepad Toolbelt" />
+  <Description value="Controller: direct toolbelt access with LB/RB chords (LB tap = 1, LB + A/X/Y/B = 2-5, LB + RB = 6, RB + A/X/Y/B = 7-10, RB tap = 11), an 11th toolbelt slot, animated button hints on the slots and a short haptic pulse. Menus, vehicles and radials stay vanilla. Works with and without the mod on the other side." />
+  <Author value="softdot.studio" />
+  <Version value="1.0.0" />
+  <Website value="" />
+</xml>
