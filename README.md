@@ -2,9 +2,19 @@
 
 **Direct toolbelt access for controller players in 7 Days to Die (V 3.3, b18) - plus an 11th toolbelt slot.**
 
+[![Latest release](https://img.shields.io/github/v/release/o0TheRat1010o/GamepadToolbelt?label=release)](https://github.com/o0TheRat1010o/GamepadToolbelt/releases/latest)
+![7 Days to Die V 3.3 (b18)](https://img.shields.io/badge/7%20Days%20to%20Die-V%203.3%20%28b18%29-8b0000)
+![Controllers: Xbox, PlayStation, Steam Deck](https://img.shields.io/badge/controller-Xbox%20%7C%20PlayStation%20%7C%20Steam%20Deck-2e7d32)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 On a controller, vanilla only lets you step through the toolbelt with LB/RB one slot at a time (holding LB opens a radial
 menu). That is too slow when a zombie is in your face and you need the shotgun *now*. Gamepad Toolbelt maps every slot
-to a short chord on the bumpers and face buttons:
+to a short chord on the bumpers and face buttons.
+
+**[Download](https://github.com/o0TheRat1010o/GamepadToolbelt/releases/latest)** · [Installation](#installation) ·
+[Playing together](#playing-together) · [Troubleshooting](#troubleshooting) ·
+[Compatibility](#multiplayer-and-compatibility) · [Configuration](#configuration) · [Console command](#console-command) ·
+[FAQ](#faq) · [Building from source](#building-from-source)
 
 | Slot | Controller | | Slot | Controller |
 |---:|---|---|---:|---|
@@ -57,34 +67,120 @@ a feature off cleanly if something changed in a game update (see `gtb selftest`)
 **Controllers:** Xbox, PlayStation and Steam Input (Steam Deck uses the Xbox layout). Controllers that the game itself
 does not recognise keep their vanilla behaviour.
 
+**EasyAntiCheat:** the mod contains program code (a DLL), so whoever uses it starts the game without EAC
+([installation step 4](#4-start-the-game-without-easyanticheat)) and can then only join servers that do not require EAC.
+A dedicated server loads the mod even with EAC enabled; players without the mod can keep EAC on.
+
 **Other mods:** Harmony prefix/postfix patches only, no transpilers. UI mods that rebuild the HUD toolbelt are detected;
 the hints are then left out (the chords still work).
 
-### EasyAntiCheat
-
-This is a DLL mod. Whoever uses it starts the game **without EasyAntiCheat** (launcher option "Play without EAC") - and can
-then only join servers that do not require EAC. A dedicated server loads the mod even with EAC enabled; players without
-the mod can keep EAC on.
-
 ## Installation
 
-1. Download the release ZIP and extract it into the game's `Mods` folder, so that you get
-   `Mods/GamepadToolbelt/GamepadToolbelt.dll`, `ModInfo.xml` and `Settings.xml`.
-   (`Mods/0_TFP_Harmony` ships with the game and must stay.)
-2. Start the game without EasyAntiCheat. The log (F1 console) shows `[GamepadToolbelt] ready: ... selftest PASS`.
+There is no installer: the mod is a single folder that you copy into the game's `Mods` folder. It takes about two
+minutes.
 
-Server owners: install the same folder on the dedicated server (it offers the 11th slot; set `ToolbeltSlots` to 10 if you
-do not want that). Hosting from your own game needs nothing extra.
+### 1. Download the mod
+
+1. Open the **[latest release](https://github.com/o0TheRat1010o/GamepadToolbelt/releases/latest)**.
+2. Under **Assets**, click **`GamepadToolbelt-<version>.zip`** (for example `GamepadToolbelt-1.0.0.zip`) and save it,
+   for example in your *Downloads* folder.
+
+Do **not** download *Source code (zip)* - that is the source code for developers, not the mod.
+
+### 2. Open the game's `Mods` folder
+
+1. In Steam, open your **Library**, right-click **7 Days to Die** and choose **Manage → Browse local files**. The game
+   folder opens (usually `C:\Program Files (x86)\Steam\steamapps\common\7 Days To Die`).
+2. Open the folder **`Mods`**. It already contains a folder **`0_TFP_Harmony`** - it belongs to the game, leave it there.
+   If it is missing, right-click the game in Steam and choose **Properties → Installed Files → Verify integrity of game
+   files**.
+
+On the Steam Deck, switch to Desktop Mode first; the steps are the same.
+
+### 3. Copy the mod into it
+
+1. Double-click the downloaded ZIP file. Windows opens it like a folder and shows exactly one folder:
+   **`GamepadToolbelt`**.
+2. Drag this **`GamepadToolbelt`** folder into the `Mods` folder from step 2. If Windows asks for administrator
+   permission, click **Continue**.
+
+Afterwards it must look exactly like this:
+
+```
+7 Days To Die
+└── Mods
+    ├── 0_TFP_Harmony            belongs to the game, leave it
+    └── GamepadToolbelt
+        ├── GamepadToolbelt.dll
+        ├── ModInfo.xml
+        ├── Settings.xml
+        └── README.md, LICENSE, CHANGELOG.md
+```
+
+> **Most common mistake:** an extra folder in between, such as `Mods\GamepadToolbelt-1.0.0\GamepadToolbelt\...` (this
+> happens with *Extract All...*). The game only looks one folder deep and then does not load the mod. Move the inner
+> `GamepadToolbelt` folder directly into `Mods` and delete the empty outer folder.
+
+### 4. Start the game without EasyAntiCheat
+
+The mod contains program code (a DLL). The game only loads such mods when it runs **without EasyAntiCheat (EAC)**.
+
+1. In Steam, click **Play**.
+2. Steam asks how to start the game: choose **Launch game without EAC**.
+
+Alternatively choose **Show game launcher**, untick **Use EasyAntiCheat (EAC)** there and start the game.
+
+### 5. Check that it works
+
+- In the game, use your controller: small button plates (LB, A, X, Y, B, RB) appear on the toolbelt slots.
+- Or press **F1** to open the console, type `gtb` and press **Enter**: a table with the mod's status appears, and the
+  line **Selftest** says `PASS`.
+
+If neither works, see [Troubleshooting](#troubleshooting).
+
+### Playing together
+
+| Who | What to do |
+|---|---|
+| Everyone who wants the chords | installs the mod (steps 1-5) and starts the game without EAC |
+| The player who hosts the game | needs the mod as well if you want the 11th slot - otherwise everyone has 10 slots and the chords for slots 1-10 still work |
+| Friends without the mod | nothing to do, they join as usual (with or without EAC) |
+| A friend hosts and you have the mod | the host must also start the game **without EAC**, otherwise you cannot join |
+| Servers that require EAC | start the game normally (with EAC); the mod then simply stays off |
+
+### Dedicated server
+
+Copy the same `GamepadToolbelt` folder into the `Mods` folder of the server. A dedicated server loads the mod even with
+EAC enabled and offers the 11th slot to every player with the mod (set `ToolbeltSlots` to `10` in `Settings.xml` if you
+do not want that). Players without the mod keep 10 slots and stay compatible.
+
+### Updating
+
+Download the new ZIP and copy its `GamepadToolbelt` folder over the old one, replacing the files. If you changed
+`Settings.xml`, keep your own copy: settings that a new version adds use their default until you add them.
 
 ### Uninstalling
 
-Empty slot 11 first. If you forget, the game moves that item into your backpack (or drops it next to you if the backpack
-is full) the next time you load the save. Then delete the `Mods/GamepadToolbelt` folder.
+1. Empty slot 11 first (move the item elsewhere). If you forget, the game moves it into your backpack the next time you
+   load the save, or drops it next to you if the backpack is full.
+2. Delete the folder `Mods\GamepadToolbelt`.
+
+### Troubleshooting
+
+- **No button plates and the chords do nothing:** check step 3 (no extra folder in between) and step 4 (started without
+  EAC). If the console does not know `gtb` (*unknown command*), the mod was not loaded - it is one of these two.
+- **The plates disappear:** they only show while you play with a controller; with mouse and keyboard they fade out.
+  `HintMode` in `Settings.xml` controls them.
+- **Only 10 slots:** the host or the server does not have the mod. Everything else works; tapping RB just does nothing.
+- **Game version:** the mod is made for **V 3.3 (b18)**. After a game update, `gtb selftest` shows what still works.
+- **Still stuck?** [Open an issue](https://github.com/o0TheRat1010o/GamepadToolbelt/issues) and paste the output of
+  `gtb status` and `gtb selftest`.
 
 ## Configuration
 
-`Mods/GamepadToolbelt/Settings.xml`. Everything applies live with the console command `gtb reload`, except
-`ToolbeltSlots`, which is read when a world is loaded. Invalid values are reported in the log and fall back to the default.
+`Mods/GamepadToolbelt/Settings.xml` (open it with any text editor, e.g. Notepad). Everything applies live with the
+console command `gtb reload`, except `ToolbeltSlots`, which is read when a world is loaded. Invalid values are reported
+in the log and fall back to the default.
 
 | Setting | Default | Meaning |
 |---|---|---|
@@ -133,6 +229,10 @@ for everything else.
 
 **Does the mod change my save?** No save data of its own. The toolbelt has 11 slots while the mod is active; old saves
 get an empty 11th slot, and removing the mod moves the slot 11 item into your backpack.
+
+**I started the game with EAC by accident - what happened?** The mod was simply not loaded: vanilla controls and 10
+slots. In a singleplayer save the game moved the item from slot 11 into your backpack, just like after uninstalling.
+Start without EAC next time and put it back.
 
 **What about the death backpack?** The game's dropped backpack holds 120 items: 96 bag + 13 equipment + 11 toolbelt fit
 exactly. (Mods that enlarge the bag further are reported by the selftest.)
