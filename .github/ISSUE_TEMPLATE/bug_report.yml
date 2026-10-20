@@ -6,7 +6,8 @@ body:
     attributes:
       value: >-
         Thanks for taking the time to report this. The mod logs what it does, so the output of `gtb status` /
-        `gtb selftest` and the audit log usually show the cause quickly.
+        `gtb selftest` and the audit log usually show the cause quickly. Issues are public: please replace player
+        names, Steam/EOS IDs, IP addresses and user names in file paths before posting.
   - type: input
     id: mod-version
     attributes:
@@ -81,4 +82,6 @@ body:
       label: Logs
       description: >-
         Attach (drag and drop) the audit log of the session, `Mods/GamepadToolbelt/Logs/audit_*.jsonl`, and the game
-        log. Lines with `[GamepadToolbelt]`, `[MODS]` or `ERR` are the most useful.
+        log. Lines with `[GamepadToolbelt]`, `[MODS]` or `ERR` are the most useful. Both logs can contain file paths
+        with your user name, and the game log also contains player names and Steam/EOS IDs: replace them before
+        uploading (names consistently, for example Player1, Player2).
